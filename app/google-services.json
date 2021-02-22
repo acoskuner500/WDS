@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "670599801427",
+    "project_id": "genuine-cirrus-294302",
+    "storage_bucket": "genuine-cirrus-294302.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670599801427:android:d152cb3c322385f42034a6",
+        "android_client_info": {
+          "package_name": "com.example.wds"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "670599801427-a7pspk7bmf4ri5cmg8cgoqq4pa7lhv2s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwNi5buXQeir5xIN7GQ_2RW-QZ0Q6k9UI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "670599801427-a7pspk7bmf4ri5cmg8cgoqq4pa7lhv2s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

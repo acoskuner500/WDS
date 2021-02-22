@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/miVerify"
+        android:icon="@drawable/ic_verify_24"
+        android:title="@string/nav_verify" />
+    <item
+        android:id="@+id/miLog"
+        android:icon="@drawable/ic_log_24"
+        android:title="@string/nav_log" />
+    <item
+        android:id="@+id/miChoose"
+        android:icon="@drawable/ic_animals_24"
+        android:title="@string/nav_choose" />
+</menu>

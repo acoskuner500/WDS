@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chooseTable"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="@color/caramel_lite"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnBear"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:backgroundTint="@color/btn_color"
+                android:contentDescription="@string/btnBearDescription"
+                android:scaleType="fitCenter"
+                android:src="@drawable/bear_selector" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="wrap_content" />
+
+            <ImageButton
+                android:id="@+id/btnBoar"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:backgroundTint="@color/btn_color"
+                android:contentDescription="@string/btnBoarDescription"
+                android:scaleType="fitCenter"
+                android:src="@drawable/boar_selector" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnDeer"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:backgroundTint="@color/btn_color"
+                android:contentDescription="@string/btnDeerDescription"
+                android:scaleType="fitCenter"
+                android:src="@drawable/deer_selector" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="wrap_content" />
+
+            <ImageButton
+                android:id="@+id/btnDog"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:backgroundTint="@color/btn_color"
+                android:contentDescription="@string/btnDogDescription"
+                android:scaleType="fitCenter"
+                android:src="@drawable/dog_selector" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnRabbit"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:backgroundTint="@color/btn_color"
+                android:contentDescription="@string/btnRabbitDescription"
+                android:scaleType="fitCenter"
+                android:src="@drawable/rabbit_selector" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="wrap_content" />
+
+            <ImageButton
+                android:id="@+id/btnRaccoon"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:backgroundTint="@color/btn_color"
+                android:contentDescription="@string/btnRaccoonDescription"
+                android:scaleType="fitCenter"
+                android:src="@drawable/raccoon_selector" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnSkunk"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:backgroundTint="@color/btn_color"
+                android:contentDescription="@string/btnSkunkDescription"
+                android:scaleType="fitCenter"
+                android:src="@drawable/skunk_selector" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="wrap_content" />
+
+            <ImageButton
+                android:id="@+id/btnSquirrel"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:backgroundTint="@color/btn_color"
+                android:contentDescription="@string/btnSquirrelDescription"
+                android:scaleType="fitCenter"
+                android:src="@drawable/squirrel_selector" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
