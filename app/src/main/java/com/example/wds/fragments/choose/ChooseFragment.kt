@@ -7,49 +7,45 @@ import android.widget.ImageButton
 import android.content.SharedPreferences
 import android.os.Bundle
 import com.example.wds.R
+import com.example.wds.databinding.FragmentChooseBinding
 
 class ChooseFragment : Fragment(R.layout.fragment_choose) {
-
-    //    private var numSelected: Int = 0
-    private lateinit var btnArray: Array<ImageButton>
+//    private var numSelected = 0
+    private lateinit var binding: FragmentChooseBinding
+    private lateinit var btnList: List<ImageButton>
 
     companion object {
         private const val prefsKey = "prefsKey"
-        //        private const val numSelKey = "numSelKey"
-        //        private const val btnEnKey = "btnEnKey"
         private const val btnSelKey = "btnSelKey"
-        private val btnIdArr = arrayOf(
-            R.id.btnBear, R.id.btnBoar, R.id.btnDeer, R.id.btnDog,
-            R.id.btnRabbit, R.id.btnRaccoon, R.id.btnSkunk, R.id.btnSquirrel
-        )
+//        private const val btnEnKey = "btnEnKey"
+//        private const val numSelKey = "numSelKey"
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btnArray = createBtnArray(view)
-        loadData(btnArray)
-        for (btn in btnArray) {
-            btn.setOnClickListener {
-                btnSelToggled(btn)
-//                btnEnToggled(btnArray)
+        binding = FragmentChooseBinding.bind(view)
+        with(binding) {
+            btnList = listOf(
+                btnBear, btnBoar, btnDeer, btnDog,
+                btnRabbit, btnRaccoon, btnSkunk, btnSquirrel
+            )
+            for (btn in btnList) {
+                btn.isSelected = false
+//                btn.isEnabled = true
+            }
+            loadData()
+            for (btn in btnList) {
+                btn.setOnClickListener {
+                    btnSelToggled(btn)
+//                    btnEnToggled()
+                }
             }
         }
     }
 
     override fun onPause() {
-        saveData(btnArray)
+        saveData()
         super.onPause()
-    }
-
-    private fun createBtnArray(view: View): Array<ImageButton> {
-        val btnList = ArrayList<ImageButton>()
-        for (id in btnIdArr) {
-            btnList.add(view.findViewById(id))
-            val btn = btnList[btnList.size-1]
-            btn.isSelected = false
-            btn.isEnabled = true
-        }
-        return btnList.toTypedArray()
     }
 
     private fun btnSelToggled(btn: ImageButton) {
@@ -61,8 +57,8 @@ class ChooseFragment : Fragment(R.layout.fragment_choose) {
 //        }
     }
 
-//    private fun btnEnToggled(btnArray: Array<ImageButton>) {
-//        for (btn in btnArray) {
+//    private fun btnEnToggled() {
+//        for (btn in btnList) {
 //            if (numSelected >= 3) {
 //                btn.isEnabled = btn.isSelected
 //            } else {
@@ -71,25 +67,25 @@ class ChooseFragment : Fragment(R.layout.fragment_choose) {
 //        }
 //    }
 
-    private fun saveData(btnArray: Array<ImageButton>) {
+    private fun saveData() {
         prefs().edit().apply {
 //            putInt(numSelKey, numSelected)
-            for (btn in btnArray) {
+            for (btn in btnList) {
                 putBoolean(btnSelKey + btn.id.toString(), btn.isSelected)
 //                putBoolean(btnEnKey + btn.id.toString(), btn.isEnabled)
             }
         }.apply()
     }
 
-    private fun loadData(btnArray: Array<ImageButton>) {
+    private fun loadData() {
 //        numSelected = prefs().getInt(numSelKey, 0)
 //        if (numSelected == 0) {
-//            for (btn in btnArray) {
+//            for (btn in btnList) {
 //                btn.isEnabled = true
 //                btn.isSelected = false
 //            }
 //        } else {
-            for (btn in btnArray) {
+            for (btn in btnList) {
                 btn.isSelected = prefs().getBoolean(btnSelKey + btn.id.toString(), false)
 //                btn.isEnabled = prefs().getBoolean(btnEnKey + btn.id.toString(), true)
             }
