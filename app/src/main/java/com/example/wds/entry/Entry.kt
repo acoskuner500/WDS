@@ -8,6 +8,6 @@ data class Entry(
     @PrimaryKey(autoGenerate = true)
     val entryId : Int,
     val imgSrc : String,
-    val textAnimal : String,
+    val filename/*textAnimal*/ : String,
     val textTime : String
 )

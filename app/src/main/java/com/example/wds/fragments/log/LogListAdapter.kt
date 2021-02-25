@@ -13,7 +13,9 @@ class LogListAdapter : RecyclerView.Adapter<LogListAdapter.LogViewHolder>() {
     private var logList = emptyList<Entry>()
     class LogViewHolder(private val binding: LogItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(entry: Entry) {
-            binding.tvAnimal.text = entry.textAnimal
+            val filename = entry.filename
+            binding.tvAnimal.text = filename.substring(0,filename.length-8)
+//            binding.tvAnimal.text = entry.filename
             binding.tvTimestamp.text = entry.textTime
 
             val requestOptions = RequestOptions()

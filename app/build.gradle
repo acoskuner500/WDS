@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
     id 'kotlin-android'
-//    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
 }
 
@@ -55,9 +54,11 @@ dependencies {
     implementation "com.yuyakaido.android:card-stack-view:$rootProject.cardstackviewVersion"
 
     // Firebase
-//    implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")
-    implementation "com.google.firebase:firebase-storage-ktx:$rootProject.storageVersion"
-    implementation 'com.firebaseui:firebase-ui-storage:7.1.1'
+    implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")
+    implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation 'com.google.firebase:firebase-functions-ktx'
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation "com.firebaseui:firebase-ui-storage:$rootProject.firebaseUIVersion"
 
     // Fragment-ktx
     implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"

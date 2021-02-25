@@ -1,5 +1,6 @@
 package com.example.wds
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -60,6 +61,9 @@ class MainActivity : AppCompatActivity() {
                 true
             }
         }
+
+        val notificationService = Intent(this,MyFirebaseMessagingService::class.java)
+        startService(notificationService)
     }
 
     private fun setCurrentFragment(fragment: Fragment) =
