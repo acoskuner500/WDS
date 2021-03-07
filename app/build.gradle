@@ -59,6 +59,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-functions-ktx'
     implementation 'com.google.firebase:firebase-messaging'
     implementation "com.firebaseui:firebase-ui-storage:$rootProject.firebaseUIVersion"
+    implementation "com.firebaseui:firebase-ui-firestore:$rootProject.firebaseUIVersion"
+
+    // Google Cloud (Storage)
+//    implementation "com.google.cloud:google-cloud-storage:$rootProject.storageVersion"
 
     // Fragment-ktx
     implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"

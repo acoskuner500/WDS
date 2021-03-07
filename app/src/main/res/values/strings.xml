@@ -15,6 +15,7 @@
     <string name="btnRaccoonDescription">Raccoon Button</string>
     <string name="btnSkunkDescription">Skunk Button</string>
     <string name="msg_verification_done">Verification complete!\nCheck back later for more</string>
+    <string name="disconnected">No network connection! Restore connection to view deterred animals.</string>
     <string name="desc_reject">Reject Button</string>
     <string name="desc_undo">Undo Button</string>
     <string name="desc_accept">Accept Button</string>

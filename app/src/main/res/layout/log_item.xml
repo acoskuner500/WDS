@@ -16,8 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:background="@drawable/gradation_black">
+        android:layout_gravity="bottom">
 
         <ImageView
             android:id="@+id/log_pic"
@@ -25,6 +24,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_image_400"
             android:scaleType="centerCrop"
+            android:foreground="@drawable/gradation_black"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

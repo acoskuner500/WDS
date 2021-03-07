@@ -3,30 +3,26 @@ package com.example.wds.fragments.log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.example.wds.Entry
+import com.example.wds.GlideApp
 import com.example.wds.R
 import com.example.wds.databinding.LogItemBinding
-import com.example.wds.entry.Entry
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
-class LogListAdapter : RecyclerView.Adapter<LogListAdapter.LogViewHolder>() {
-    private var logList = emptyList<Entry>()
+class LogListAdapter(options: FirestoreRecyclerOptions<Entry>) :
+    FirestoreRecyclerAdapter<Entry, LogListAdapter.LogViewHolder>(options) {
     class LogViewHolder(private val binding: LogItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(entry: Entry) {
-            val filename = entry.filename
-            binding.tvAnimal.text = filename.substring(0,filename.length-8)
-//            binding.tvAnimal.text = entry.filename
-            binding.tvTimestamp.text = entry.textTime
+            binding.tvAnimal.text = entry.getTextAnimal()
+            binding.tvTimestamp.text = entry.getTextTime()
 
-            val requestOptions = RequestOptions()
-                    .placeholder(R.drawable.ic_image_400)
-                    .error(R.drawable.ic_image_400)
-                    .fitCenter()
-
-            Glide.with(itemView.context)
-                    .applyDefaultRequestOptions(requestOptions)
-                    .load(entry.imgSrc)
-                    .into(binding.logPic)
+            GlideApp.with(itemView.context)
+                .load(entry.getImgSrc())
+                .placeholder(R.drawable.ic_image_400)
+                .error(R.drawable.ic_image_400)
+                .fitCenter()
+                .into(binding.logPic)
         }
     }
 
@@ -34,15 +30,9 @@ class LogListAdapter : RecyclerView.Adapter<LogListAdapter.LogViewHolder>() {
         return LogViewHolder( LogItemBinding.inflate(LayoutInflater.from(parent.context), parent,false) )
     }
 
-    override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
-        holder.bind(logList[position])
+    override fun onBindViewHolder(holder: LogViewHolder, position: Int, model: Entry) {
+        holder.bind(model)
     }
 
-    override fun getItemCount() = logList.size
-
-    fun setEntries(entries : List<Entry>) {
-//        println("DEBUG LogListAdapter->setEntries()")
-        logList = entries
-        notifyDataSetChanged()
-    }
+    override fun getItemCount() = snapshots.size
 }

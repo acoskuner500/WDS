@@ -2,6 +2,7 @@ package com.example.wds.fragments.choose
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageButton
@@ -9,16 +10,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.wds.R
 import com.example.wds.databinding.FragmentChooseBinding
-import com.google.android.gms.tasks.Task
-import com.google.firebase.functions.FirebaseFunctions
-import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
+import com.google.firebase.storage.ktx.storage
 
 class ChooseFragment : Fragment(R.layout.fragment_choose) {
     private lateinit var binding: FragmentChooseBinding
     private lateinit var btnArray: Array<ImageButton>
-    private lateinit var functions: FirebaseFunctions
     private val prefs by lazy {
         requireContext().getSharedPreferences(
             prefsKey,
@@ -26,29 +23,33 @@ class ChooseFragment : Fragment(R.layout.fragment_choose) {
         )
     }
 
-    private val animalKeys = arrayOf(
-        "bear",
-        "boar",
-        "deer",
-        "dog",
-        "rabbit",
-        "raccoon",
-        "skunk",
-        "squirrel"
-    )
-    //    private var numSelected = 0
-    private val num = animalKeys.size
-    private val oldBool = Array(num) { false }
-    private val newBool = Array(num) { false }
-    private val prefsKey = "prefsKey"
-    private val btnSelKey = "btnSelKey"
-//    private val btnEnKey = "btnEnKey"
-//    private val numSelKey = "numSelKey"
+    companion object {
+        private val animalKeys = arrayOf(
+            "bear",
+            "boar",
+            "deer",
+            "dog",
+            "rabbit",
+            "raccoon",
+            "skunk",
+            "squirrel"
+        )
+        private val num = animalKeys.size
+        private const val prefsKey = "prefsKey"
+        private const val btnSelKey = "btnSelKey"
+        private const val btnEnKey = "btnEnKey"
+        private const val numSelKey = "numSelKey"
+        private const val TAG = "DEBUG"
+    }
+    private var numSelected = 0
+    private val oldSelected = Array(num) { false }
+    private val newSelected = Array(num) { false }
+    private val oldEnabled = Array(num) { false }
+    private val newEnabled = Array(num) { false }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentChooseBinding.bind(view)
-        functions = Firebase.functions
         with(binding) {
             btnArray = arrayOf(
                 btnBear, btnBoar, btnDeer, btnDog,
@@ -58,7 +59,7 @@ class ChooseFragment : Fragment(R.layout.fragment_choose) {
             for (btn in btnArray) {
                 btn.setOnClickListener {
                     btnSelToggled(btn)
-//                    btnEnToggled()
+                    btnEnToggled()
                 }
             }
         }
@@ -71,42 +72,47 @@ class ChooseFragment : Fragment(R.layout.fragment_choose) {
 
     private fun btnSelToggled(btn: ImageButton) {
         btn.isSelected = !(btn.isSelected)
-//        if (btn.isSelected) {
-//            numSelected++
-//        } else {
-//            numSelected--
-//        }
+        if (btn.isSelected) {
+            numSelected++
+        } else {
+            numSelected--
+        }
     }
 
-//    private fun btnEnToggled() {
-//        for (btn in btnArray) {
-//            if (numSelected >= 3) {
-//                btn.isEnabled = btn.isSelected
-//            } else {
-//                btn.isEnabled = true
-//            }
-//        }
-//    }
+    private fun btnEnToggled() {
+        for (btn in btnArray) {
+            if (numSelected >= num) {
+                btn.isEnabled = btn.isSelected
+            } else {
+                btn.isEnabled = true
+            }
+        }
+    }
 
     private fun saveData() {
-        prefs.edit().apply {
-//            putInt(numSelKey, numSelected)
-            for ((index, btn) in btnArray.withIndex()) {
-                val btnSelected = btn.isSelected
-                putBoolean(btnSelKey + btn.id.toString(), btnSelected)
-                newBool[index] = btnSelected
-//                putBoolean(btnEnKey + btn.id.toString(), btn.isEnabled)
+        for ((i,btn) in btnArray.withIndex()) {
+            newSelected[i] = btn.isSelected
+            newEnabled[i] = btn.isEnabled
+        }
+        val change = !newSelected.contentEquals(oldSelected) || !newEnabled.contentEquals(oldEnabled)
+        val text =
+            if (change) {
+                prefs.edit().apply {
+                    putInt(numSelKey, numSelected)
+                    for (btn in btnArray) {
+                        putBoolean(btnSelKey + btn.id.toString(), btn.isSelected)
+                        putBoolean(btnEnKey + btn.id.toString(), btn.isEnabled)
+                    }
+                }.apply()
+                val dataHash = HashMap<String, Boolean>()
+                for ((i, sel) in newSelected.withIndex()) {
+                    dataHash[animalKeys[i]] = sel
+                }
+                updateConfig(dataHash)
+                "Sending new configuration"
+            } else {
+                "No change to configuration"
             }
-        }.apply()
-        val text: String
-        if (!oldBool.contentEquals(newBool)) {
-            text = "Sending new configuration"
-            val dataHash = HashMap<String, Boolean>()
-            for (j in 0 until num) {
-                dataHash[animalKeys[j]] = newBool[j]
-            }
-            updateConfig(dataHash)
-        } else { text = "No change to configuration"}
         Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).apply {
             setGravity(Gravity.BOTTOM,0,200)
             show()
@@ -114,32 +120,31 @@ class ChooseFragment : Fragment(R.layout.fragment_choose) {
     }
 
     private fun loadData() {
-//        numSelected = prefs().getInt(numSelKey, 0)
-//        if (numSelected == 0) {
-//            for (btn in btnArray) {
-//                btn.isEnabled = true
-//                btn.isSelected = false
-//            }
-//        } else {
-        for ((index, btn) in btnArray.withIndex()) {
-            val btnSelected = prefs.getBoolean(btnSelKey + btn.id.toString(), false)
-            btn.isSelected = btnSelected
-            oldBool[index] = btnSelected
-//                btn.isEnabled = prefs().getBoolean(btnEnKey + btn.id.toString(), true)
+        numSelected = prefs.getInt(numSelKey, 0)
+        var sel = false
+        var en = true
+        for ((i,btn) in btnArray.withIndex()) {
+            if (numSelected != 0) {
+                sel = prefs.getBoolean(btnSelKey + btn.id.toString(), false)
+                en = prefs.getBoolean(btnEnKey + btn.id.toString(), true)
+            }
+            btn.isSelected = sel
+            btn.isEnabled = en
+            oldSelected[i] = sel
+            oldEnabled[i] = en
+            Log.d(TAG, "loadData: btn = ${btn.id}: sel = $sel, en = $en")
         }
-//        }
     }
 
-    private fun updateConfig(data: HashMap<String, Boolean>): Task<String> {
-        return functions
-            .getHttpsCallable("updateConfig")
-            .call(Gson().toJson(data))
-            .continueWith { task ->
-                // This continuation runs on either success or failure, but if the task
-                // has failed then result will throw an Exception which will be
-                // propagated down.
-                val result = task.result?.data as String
-                result
+    private fun updateConfig(data: HashMap<String, Boolean>) {
+        val configRef = Firebase.storage("gs://deterred/").reference
+            .child("configuration.json")
+        configRef.putBytes(data.toString().toByteArray())
+            .addOnFailureListener { e ->
+                Log.d(TAG, "updateConfig: $e")
+            }
+            .addOnSuccessListener {
+                Log.d(TAG, "updateConfig: configuration.json updated successfully")
             }
     }
 }

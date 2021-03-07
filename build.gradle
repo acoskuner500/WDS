@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.4.30"
+    ext.kotlin_version = "1.4.31"
     repositories {
         google()
         jcenter()
@@ -43,8 +43,9 @@ ext {
     navigationVersion = '2.3.3'
     recyclerviewVersion = '1.1.0'
     roomVersion = '2.2.6'
+    storageVersion = '1.113.12'
     // testing
-    junitVersion = '4.13.1'
-    espressoVersion = '3.1.0'
+    junitVersion = '4.13.2'
+    espressoVersion = '3.3.0'
     androidxJunitVersion = '1.1.2'
 }
