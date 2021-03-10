@@ -1,80 +1,99 @@
 package com.example.wds
 
+
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.wds.databinding.ActivityMainBinding
 import com.example.wds.fragments.choose.ChooseFragment
 import com.example.wds.fragments.log.LogFragment
 import com.example.wds.fragments.verify.VerifyFragment
+import com.google.firebase.auth.FirebaseAuth
+//import com.google.firebase.firestore.FirebaseFirestore
+//import com.google.firebase.messaging.FirebaseMessaging
 
 @RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-    private val verifyFragment = VerifyFragment()
-    private val logFragment = LogFragment()
-    private val chooseFragment = ChooseFragment()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.Theme_WDS)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var infoTitle = getString(R.string.info_verify_title)
+        var infoBody = getString(R.string.info_verify)
 
         // Initialize
-        setCurrentFragment(verifyFragment)
+        setCurrentFragment(VerifyFragment())
         binding.apply {
-            infoTitle.text = getString(R.string.info_verify_title)
-            infoText.text = getString(R.string.info_verify)
             bottomNavigation.selectedItemId = R.id.miVerify
-            toolbar.title = "Verify Deterrences"
-
-            // Info Dialog
+            toolbar.title = getString(R.string.title_verify)
             infoBtn.setOnClickListener {
-                infoDialog.visibility =
-                    if (infoDialog.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                openDialog(infoTitle, infoBody, true)
             }
-            okBtn.setOnClickListener { infoDialog.visibility = View.GONE }
-            // Bottom Navigation Selector
+            logoutBtn.setOnClickListener {
+                openDialog("Log out", "Are you sure you want to log out?", false)
+            }
             bottomNavigation.setOnNavigationItemSelectedListener {
-                infoDialog.visibility = View.GONE
                 when (it.itemId) {
                     R.id.miVerify -> {
-                        setCurrentFragment(verifyFragment)
-                        infoTitle.text = getString(R.string.info_verify_title)
-                        infoText.text = getString(R.string.info_verify)
+                        toolbar.title = getString(R.string.title_verify)
+                        infoTitle = getString(R.string.info_verify_title)
+                        infoBody = getString(R.string.info_verify)
+                        setCurrentFragment(VerifyFragment())
                     }
                     R.id.miLog -> {
-                        setCurrentFragment(logFragment)
-                        infoTitle.text = getString(R.string.info_log_title)
-                        infoText.text = getString(R.string.info_log)
+                        toolbar.title = getString(R.string.title_log)
+                        infoTitle = getString(R.string.info_log_title)
+                        infoBody = getString(R.string.info_log)
+                        setCurrentFragment(LogFragment())
                     }
                     R.id.miChoose -> {
-                        setCurrentFragment(chooseFragment)
-                        infoTitle.text = getString(R.string.info_choose_title)
-                        infoText.text = getString(R.string.info_choose)
+                        toolbar.title = getString(R.string.title_choose)
+                        infoTitle = getString(R.string.info_choose_title)
+                        infoBody = getString(R.string.info_choose)
+                        setCurrentFragment(ChooseFragment())
                     }
                 }
                 true
             }
         }
 
-        val notificationService = Intent(this,MyFirebaseMessagingService::class.java)
-        startService(notificationService)
+//        FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+//            val user = FirebaseAuth.getInstance().currentUser!!
+//            val data = mapOf("email" to user.email!!, "token" to token)
+//            FirebaseFirestore.getInstance().collection("Users").document(user.uid).set(data)
+//        }
+//        FirebaseMessaging.getInstance().subscribeToTopic("new-deterred")
+//            .addOnCompleteListener { task ->
+//                val msg = if (task.isSuccessful) "Subscribed successfully" else "Subscription failed"
+//            }
+//        val notificationService = Intent(this,MyFirebaseMessagingService::class.java)
+//        startService(notificationService)
     }
 
     private fun setCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
-            when (fragment) {
-                verifyFragment  -> binding.toolbar.title = "Verify Deterrences"
-                logFragment     -> binding.toolbar.title = "Deterrence Log"
-                chooseFragment  -> binding.toolbar.title = "Choose Animals to Deter"
-            }
             replace(R.id.flFragment, fragment)
             commit()
         }
+
+    private fun openDialog(title: String, body: String, isInfo: Boolean) {
+        AlertDialog.Builder(this, R.style.AlertDialogTheme).apply {
+            setTitle(title)
+            setMessage(body)
+            if (!isInfo) {
+                setPositiveButton("CANCEL") { _, _ -> }
+                setNegativeButton("LOG OUT") { _, _ ->
+                    val intent = Intent(context, LoginActivity::class.java)
+                    FirebaseAuth.getInstance().signOut()
+                    startActivity(intent)
+                    finish()
+                }
+            }
+            show()
+        }
+    }
 }

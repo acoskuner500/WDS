@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.WDS" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="splashScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground" >@drawable/splash_image</item>
+        <item name="android:statusBarColor">@color/maroon_main</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+        <item name="colorControlActivated">@color/maroon_dark</item>
+    </style>
+    <style name="MainActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--        Theme.MaterialComponents.DayNight.DarkActionBar-->
         <!--        Theme.AppCompat.DayNight.DarkActionBar-->
         <!-- Primary brand color. -->
@@ -13,13 +19,10 @@
         <item name="colorSecondaryVariant">@color/caramel_main</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <item name="android:navigationBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/maroon_dark</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/maroon_dark</item>
     </style>
-    <style name="splashScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowBackground" >@drawable/splash_image</item>
-        <item name="android:statusBarColor">@color/maroon_main</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/maroon_main</item>
     </style>
 </resources>

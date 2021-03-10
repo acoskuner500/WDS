@@ -90,11 +90,6 @@ class VerifyFragment : Fragment(R.layout.fragment_verify), CardStackListener {
     private fun setupButtons() {
 //        Log.d(TAG, "setupButtons()")
         with(binding) {
-//            binding.btnAdd.setOnClickListener {
-
-//            }
-            btnAdd.visibility = View.GONE
-
             undoBtn.setOnClickListener {
                 if (actionList.size > 0) {
                     myManager.setRewindAnimationSetting(
@@ -211,7 +206,7 @@ class VerifyFragment : Fragment(R.layout.fragment_verify), CardStackListener {
     private fun bgtvVisibility() {
 //        Log.d(TAG, "bgtvVisibility() itemCount:${myAdapter.itemCount}")
         binding.tvVerify.text =
-            if (checkConnection()) getString(R.string.disconnected)
+            if (!checkConnection()) getString(R.string.msg_disconnected)
             else getString(R.string.msg_verification_done)
         binding.tvVerify.visibility =
             if (myAdapter.itemCount == actionList.size) View.VISIBLE
