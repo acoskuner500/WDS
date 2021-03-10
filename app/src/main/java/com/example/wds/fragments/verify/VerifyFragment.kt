@@ -12,7 +12,7 @@ import android.view.animation.LinearInterpolator
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
-import com.example.wds.Entry
+import com.example.wds.utilities.Entry
 import com.example.wds.R
 import com.example.wds.databinding.FragmentVerifyBinding
 import com.firebase.ui.firestore.FirestoreRecyclerOptions

@@ -3,8 +3,8 @@ package com.example.wds.fragments.log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wds.Entry
-import com.example.wds.GlideApp
+import com.example.wds.utilities.Entry
+import com.example.wds.utilities.GlideApp
 import com.example.wds.R
 import com.example.wds.databinding.LogItemBinding
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter

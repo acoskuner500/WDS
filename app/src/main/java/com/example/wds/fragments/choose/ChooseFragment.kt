@@ -1,13 +1,12 @@
 package com.example.wds.fragments.choose
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.wds.R
 import com.example.wds.databinding.FragmentChooseBinding
+import com.example.wds.utilities.toast
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ChooseFragment : Fragment(R.layout.fragment_choose) {
@@ -86,9 +85,6 @@ class ChooseFragment : Fragment(R.layout.fragment_choose) {
             } else {
                 "No change to configuration"
             }
-        Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).apply {
-            setGravity(Gravity.BOTTOM,0,200)
-            show()
-        }
+        toast(requireContext(),text)
     }
 }

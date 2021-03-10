@@ -1,4 +1,4 @@
-package com.example.wds
+package com.example.wds.utilities
 
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -6,10 +6,6 @@ import com.google.firebase.messaging.RemoteMessage
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(rm: RemoteMessage) {
         super.onMessageReceived(rm)
-//        val title = rm.notification!!.title
-//        val body = rm.notification!!.body
-//        val imgSrc = rm.notification!!.imageUrl
-//        println("DEBUG: Message payload: ${rm.data}")
     }
 
     override fun onNewToken(token: String) {

@@ -12,14 +12,19 @@ import com.example.wds.databinding.ActivityMainBinding
 import com.example.wds.fragments.choose.ChooseFragment
 import com.example.wds.fragments.log.LogFragment
 import com.example.wds.fragments.verify.VerifyFragment
+import com.example.wds.utilities.prefs
+import com.example.wds.utilities.toast
 import com.google.firebase.auth.FirebaseAuth
-//import com.google.firebase.firestore.FirebaseFirestore
-//import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessaging
 
 @RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            signOut()
+            return
+        }
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         var infoTitle = getString(R.string.info_verify_title)
@@ -60,18 +65,6 @@ class MainActivity : AppCompatActivity() {
                 true
             }
         }
-
-//        FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
-//            val user = FirebaseAuth.getInstance().currentUser!!
-//            val data = mapOf("email" to user.email!!, "token" to token)
-//            FirebaseFirestore.getInstance().collection("Users").document(user.uid).set(data)
-//        }
-//        FirebaseMessaging.getInstance().subscribeToTopic("new-deterred")
-//            .addOnCompleteListener { task ->
-//                val msg = if (task.isSuccessful) "Subscribed successfully" else "Subscription failed"
-//            }
-//        val notificationService = Intent(this,MyFirebaseMessagingService::class.java)
-//        startService(notificationService)
     }
 
     private fun setCurrentFragment(fragment: Fragment) =
@@ -87,13 +80,25 @@ class MainActivity : AppCompatActivity() {
             if (!isInfo) {
                 setPositiveButton("CANCEL") { _, _ -> }
                 setNegativeButton("LOG OUT") { _, _ ->
-                    val intent = Intent(context, LoginActivity::class.java)
-                    FirebaseAuth.getInstance().signOut()
-                    startActivity(intent)
-                    finish()
+                    signOut()
                 }
             }
             show()
         }
+    }
+
+    private fun signOut() {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("new-deterred")
+            .addOnCompleteListener { task ->
+                val msg =
+                    if (task.isSuccessful) "Successfully unsubscribed from notifications"
+                    else "Failed to unsubscribe from notifications"
+                toast(this,msg)
+            }
+        prefs(this).edit().putBoolean("subscribed",false).apply()
+        FirebaseAuth.getInstance().signOut()
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

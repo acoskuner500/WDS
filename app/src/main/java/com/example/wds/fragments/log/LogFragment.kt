@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.wds.Entry
+import com.example.wds.utilities.Entry
 import com.example.wds.R
 import com.example.wds.databinding.FragmentLogBinding
 import com.firebase.ui.firestore.FirestoreRecyclerOptions

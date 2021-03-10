@@ -4,7 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.wds.databinding.ActivityLoginBinding
+import com.example.wds.utilities.MyFirebaseMessagingService
+import com.example.wds.utilities.prefs
+import com.example.wds.utilities.toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -93,8 +97,25 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun startMain() {
+        notificationSetup()
         val intent = Intent(applicationContext, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun notificationSetup() {
+        val subscribed = prefs(this).getBoolean("subscribed",false)
+        if (!subscribed) {
+            FirebaseMessaging.getInstance().subscribeToTopic("new-deterred")
+                .addOnCompleteListener { task ->
+                    val msg =
+                        if (task.isSuccessful) "Successfully subscribed to notifications"
+                        else "Failed to subscribe to notifications"
+                    toast(this,msg)
+                }
+            prefs(this).edit().putBoolean("subscribed",true).apply()
+            val notificationService = Intent(this, MyFirebaseMessagingService::class.java)
+            startService(notificationService)
+        }
     }
 }

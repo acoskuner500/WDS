@@ -1,4 +1,4 @@
-package com.example.wds
+package com.example.wds.utilities
 
 @Suppress("JoinDeclarationAndAssignment")
 class Entry {

@@ -1,4 +1,4 @@
-package com.example.wds
+package com.example.wds.utilities
 
 import android.content.Context
 import com.bumptech.glide.GlideBuilder

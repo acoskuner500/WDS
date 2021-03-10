@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="maroon_lite">#FF732F2F</color>
-    <color name="maroon_main">#FF500000</color>
-    <color name="maroon_dark">#FF3C0000</color>
-    <color name="caramel_lite">#FFD6D3C4</color>
-    <color name="caramel_main">#FF998542</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="maroon_lite">#732F2F</color>
+    <color name="maroon_main">#500000</color>
+    <color name="maroon_dark">#3C0000</color>
+    <color name="caramel_lite">#D6D3C4</color>
+    <color name="caramel_main">#998542</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
     <color name="color_disabled">#66FFFFFF</color>
     <color name="clear">#00000000</color>
 </resources>

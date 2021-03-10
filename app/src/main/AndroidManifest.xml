@@ -30,7 +30,7 @@
             android:theme="@style/MainActivityTheme" />
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".utilities.MyFirebaseMessagingService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -38,6 +38,12 @@
             </intent-filter>
 
         </service>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/maroon_lite"/>
     </application>
 
 </manifest>
