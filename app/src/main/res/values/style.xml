@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
     <style name="splashScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowBackground" >@drawable/splash_image</item>
-        <item name="android:statusBarColor">@color/maroon_main</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+        <item name="android:statusBarColor">@color/maroon_dark</item>
+        <item name="android:navigationBarColor">@color/maroon_dark</item>
         <item name="colorControlActivated">@color/maroon_dark</item>
+        <item name="colorPrimary">@color/maroon_main</item>
+        <item name="colorPrimaryDark">@color/maroon_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
     </style>
     <style name="MainActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!--        Theme.MaterialComponents.DayNight.DarkActionBar-->
-        <!--        Theme.AppCompat.DayNight.DarkActionBar-->
-        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/maroon_main</item>
-        <item name="colorPrimaryVariant">@color/maroon_dark</item>
+        <item name="colorPrimaryDark">@color/maroon_dark</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/caramel_lite</item>
         <item name="colorSecondaryVariant">@color/caramel_main</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/maroon_dark</item>
-        <item name="android:navigationBarColor" tools:targetApi="l">@color/maroon_dark</item>
+        <item name="android:statusBarColor">@color/maroon_dark</item>
+        <item name="android:navigationBarColor">@color/maroon_dark</item>
     </style>
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/maroon_main</item>

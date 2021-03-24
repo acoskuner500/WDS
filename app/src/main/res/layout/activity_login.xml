@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/caramel_lite"
     android:clipChildren="false"
-    android:theme="@style/splashScreenTheme"
     tools:context=".LoginActivity">
 
     <RelativeLayout
@@ -32,48 +32,66 @@
         android:layout_centerInParent="true"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp">
 
-        <EditText
-            android:id="@+id/etEmail"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilEmail"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginHorizontal="16dp"
-            android:background="@color/color_disabled"
+            android:layout_height="wrap_content"
             android:hint="@string/hint_email"
-            android:importantForAutofill="no"
-            android:inputType="textEmailAddress"
-            android:paddingHorizontal="8dp"
-            android:textColorHint="@color/maroon_lite" />
+            app:startIconDrawable="@drawable/ic_email_24"
+            app:startIconTint="@color/maroon_main"
+            app:errorEnabled="true"
+            app:errorIconDrawable="@drawable/ic_error_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/etPass"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="16dp"
-            android:background="@color/color_disabled"
+            android:layout_height="16dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="@string/hint_password"
-            android:importantForAutofill="no"
-            android:inputType="textPassword"
-            android:paddingHorizontal="8dp"
-            android:textColorHint="@color/maroon_lite" />
+            app:endIconMode="password_toggle"
+            app:startIconDrawable="@drawable/ic_lock_24"
+            app:startIconTint="@color/maroon_main"
+            app:errorEnabled="true"
+            app:errorIconDrawable="@drawable/ic_error_24"
+            app:endIconTint="@color/maroon_main"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/createUserButton"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="@color/maroon_main"
-                android:text="@string/create_user"/>
+                android:text="@string/create_user" />
 
             <Space
                 android:layout_width="16dp"
@@ -82,9 +100,8 @@
             <Button
                 android:id="@+id/loginButton"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="@color/maroon_main"
                 android:text="@string/sign_in" />
         </LinearLayout>
     </LinearLayout>

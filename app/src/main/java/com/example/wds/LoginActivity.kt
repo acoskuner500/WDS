@@ -44,10 +44,7 @@ class LoginActivity : AppCompatActivity() {
                     startMain()
                 }
                 .addOnFailureListener {
-                    binding.etPass.apply{
-                        error = it.message!!
-                        requestFocus()
-                    }
+                    binding.tilPass.error = it.message
                 }
         }
     }
@@ -60,8 +57,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener {
                     binding.etEmail.apply{
-                        error = it.message!!
-                        requestFocus()
+                        binding.tilEmail.error = it.message
                     }
                 }
         }
@@ -71,27 +67,23 @@ class LoginActivity : AppCompatActivity() {
         var emailGood = true
         var passGood = true
         with(binding) {
-            if (email.isEmpty()) {
-                etEmail.apply {
-                    error = "Email required"
-                    requestFocus()
+            tilEmail.error =
+                if (email.isEmpty()) {
+                    emailGood = false
+                    "Email required!"
+                } else null
+            tilPass.error =
+                when {
+                    password.isEmpty() -> {
+                        passGood = false
+                        "Password required!"
+                    }
+                    password.length < 6 -> {
+                        passGood = false
+                        "Password must be at least 6 characters long"
+                    }
+                    else -> null
                 }
-                emailGood = false
-            }
-            if (password.isEmpty()) {
-                etPass.apply {
-                    error = "Password required"
-                    requestFocus()
-                }
-                passGood = false
-            }
-            if (password.length < 6) {
-                etPass.apply {
-                    error = "Password must be at least 6 characters long"
-                    requestFocus()
-                }
-                passGood = false
-            }
         }
         return emailGood && passGood
     }
@@ -109,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
             FirebaseMessaging.getInstance().subscribeToTopic("new-deterred")
                 .addOnCompleteListener { task ->
                     val msg =
-                        if (task.isSuccessful) "Successfully subscribed to notifications"
+                        if (task.isSuccessful) "Subscribed to notifications"
                         else "Failed to subscribe to notifications"
                     toast(this,msg)
                 }

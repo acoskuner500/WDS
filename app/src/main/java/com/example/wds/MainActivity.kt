@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         FirebaseMessaging.getInstance().unsubscribeFromTopic("new-deterred")
             .addOnCompleteListener { task ->
                 val msg =
-                    if (task.isSuccessful) "Successfully unsubscribed from notifications"
+                    if (task.isSuccessful) "Unsubscribed from notifications"
                     else "Failed to unsubscribe from notifications"
                 toast(this,msg)
             }
