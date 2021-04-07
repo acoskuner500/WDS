@@ -1,136 +1,286 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/chooseTable"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/caramel_lite"
+    android:background="@color/caramel_lite"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/forest"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:foreground="@drawable/gradation_black"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@id/urban"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside">
+
+        <TextView
+            android:id="@+id/titleForest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/forest"
+            android:textColor="@color/maroon_main"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/forestBtns"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:el_expanded="true"
+            app:el_duration="1000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleForest">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/f1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/deer_selector"
+                    android:contentDescription="@string/desc_deer" />
+
+                <ImageButton
+                    android:id="@+id/f2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/elk_selector"
+                    android:contentDescription="@string/desc_elk"/>
+
+                <ImageButton
+                    android:id="@+id/f3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/bear_selector"
+                    android:contentDescription="@string/desc_bear"/>
+
+                <ImageButton
+                    android:id="@+id/f4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/eagle_selector"
+                    android:contentDescription="@string/desc_eagle"/>
+
+                <ImageButton
+                    android:id="@+id/f5"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/wolf_selector"
+                    android:contentDescription="@string/desc_wolf"/>
+            </LinearLayout>
+        </net.cachapa.expandablelayout.ExpandableLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/urban"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:foreground="@drawable/gradation_black"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@id/rural"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/forest">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/titleUrban"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:text="@string/urban"
+            android:textColor="@color/maroon_main"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/btnBear"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:backgroundTint="@color/btn_color"
-                android:contentDescription="@string/desc_bear"
-                android:scaleType="fitCenter"
-                android:src="@drawable/bear_selector" />
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/urbanBtns"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:el_expanded="false"
+            app:el_duration="1000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleUrban">
 
-            <Space
-                android:layout_width="5dp"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/btnBoar"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:backgroundTint="@color/btn_color"
-                android:contentDescription="@string/desc_boar"
-                android:scaleType="fitCenter"
-                android:src="@drawable/boar_selector" />
+                <ImageButton
+                    android:id="@+id/u1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/opossum_selector"
+                    android:contentDescription="@string/desc_opossum"/>
 
-        </LinearLayout>
+                <ImageButton
+                    android:id="@+id/u2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/raccoon_selector"
+                    android:contentDescription="@string/desc_raccoon"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+                <ImageButton
+                    android:id="@+id/u3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/bird_selector"
+                    android:contentDescription="@string/desc_bird"/>
+
+                <ImageButton
+                    android:id="@+id/u4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/squirrel_selector"
+                    android:contentDescription="@string/desc_squirrel"/>
+
+                <ImageButton
+                    android:id="@+id/u5"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/rat_selector"
+                    android:contentDescription="@string/desc_rat"/>
+            </LinearLayout>
+        </net.cachapa.expandablelayout.ExpandableLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rural"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:foreground="@drawable/gradation_black"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/urban">
+
+        <TextView
+            android:id="@+id/titleRural"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:text="@string/rural"
+            android:textColor="@color/maroon_main"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/btnDeer"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:backgroundTint="@color/btn_color"
-                android:contentDescription="@string/desc_deer"
-                android:scaleType="fitCenter"
-                android:src="@drawable/deer_selector" />
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/ruralBtns"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:el_expanded="false"
+            app:el_duration="1000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleRural">
 
-            <Space
-                android:layout_width="5dp"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/btnDog"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:backgroundTint="@color/btn_color"
-                android:contentDescription="@string/desc_dog"
-                android:scaleType="fitCenter"
-                android:src="@drawable/dog_selector" />
+                <ImageButton
+                    android:id="@+id/r1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/hog_selector"
+                    android:contentDescription="@string/desc_hog"/>
 
-        </LinearLayout>
+                <ImageButton
+                    android:id="@+id/r2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/cow_selector"
+                    android:contentDescription="@string/desc_cow"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/r3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/sheep_selector"
+                    android:contentDescription="@string/desc_sheep"/>
 
-            <ImageButton
-                android:id="@+id/btnRabbit"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:backgroundTint="@color/btn_color"
-                android:contentDescription="@string/desc_rabbit"
-                android:scaleType="fitCenter"
-                android:src="@drawable/rabbit_selector" />
+                <ImageButton
+                    android:id="@+id/r4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/horse_selector"
+                    android:contentDescription="@string/desc_horse"/>
 
-            <Space
-                android:layout_width="5dp"
-                android:layout_height="wrap_content" />
-
-            <ImageButton
-                android:id="@+id/btnRaccoon"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:backgroundTint="@color/btn_color"
-                android:contentDescription="@string/desc_raccoon"
-                android:scaleType="fitCenter"
-                android:src="@drawable/raccoon_selector" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/btnSkunk"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:backgroundTint="@color/btn_color"
-                android:contentDescription="@string/desc_skunk"
-                android:scaleType="fitCenter"
-                android:src="@drawable/skunk_selector" />
-
-            <Space
-                android:layout_width="5dp"
-                android:layout_height="wrap_content" />
-
-            <ImageButton
-                android:id="@+id/btnSquirrel"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:backgroundTint="@color/btn_color"
-                android:contentDescription="@string/desc_squirrel"
-                android:scaleType="fitCenter"
-                android:src="@drawable/squirrel_selector" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+                <ImageButton
+                    android:id="@+id/r5"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/maroon_main"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/chicken_selector"
+                    android:contentDescription="@string/desc_chicken"/>
+            </LinearLayout>
+        </net.cachapa.expandablelayout.ExpandableLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

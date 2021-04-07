@@ -1,6 +1,8 @@
 package com.example.wds.fragments.choose
 
+import android.app.ActionBar
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
@@ -14,30 +16,27 @@ class ChooseFragment : Fragment(R.layout.fragment_choose) {
     private lateinit var btnArray: Array<ImageButton>
 
     companion object {
+        private val modeKeys = arrayOf("forest", "urban", "rural")
         private val animalKeys = arrayOf(
-            "bear",
-            "boar",
-            "deer",
-            "dog",
-            "rabbit",
-            "raccoon",
-            "skunk",
-            "squirrel"
-        )
+            "deer", "elk", "bear", "eagle", "wolf",
+            "opossum", "raccoon", "bird", "squirrel", "rat",
+            "hog", "cow", "sheep", "horse", "chicken")
         private val num = animalKeys.size
-//        private const val TAG = "DEBUG"
+        //        private const val TAG = "DEBUG"
     }
-    private val oldSelected = Array(num) { false }
-    private val newSelected = Array(num) { false }
+    private var oldMode = modeKeys[0]
+    private var newMode = modeKeys[0]
+    private val oldSelected = Array(num) {false}
+    private val newSelected = Array(num) {false}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentChooseBinding.bind(view)
         with(binding) {
-            btnArray = arrayOf(
-                btnBear, btnBoar, btnDeer, btnDog,
-                btnRabbit, btnRaccoon, btnSkunk, btnSquirrel
-            )
+            forest.setOnClickListener { mode(it) }
+            urban.setOnClickListener { mode(it) }
+            rural.setOnClickListener { mode(it) }
+            btnArray = arrayOf(f1,f2,f3,f4,f5,u1,u2,u3,u4,u5,r1,r2,r3,r4,r5)
             load()
             for ((i,btn) in btnArray.withIndex()) {
                 btn.setOnClickListener {
@@ -58,33 +57,67 @@ class ChooseFragment : Fragment(R.layout.fragment_choose) {
         FirebaseFirestore.getInstance().collection("Verify")
             .document("configuration").get()
             .addOnSuccessListener {
-                for ((i, btn) in btnArray.withIndex()) {
-                    val sel = it.getBoolean(animalKeys[i])!!
-                    btn.isSelected = sel
-                    oldSelected[i] = sel
-                    newSelected[i] = sel
+                if (it.contains("mode")) {
+                    when (it.getString("mode")!!) {
+                        modeKeys[1] -> {
+                            oldMode = modeKeys[1]
+                            mode(binding.urban)
+                        }
+                        modeKeys[2] -> {
+                            oldMode = modeKeys[2]
+                            mode(binding.rural)
+                        }
+                        else -> {
+                            oldMode = modeKeys[0]
+                            mode(binding.forest)
+                        }
+                    }
+                    for ((i, btn) in btnArray.withIndex()) {
+                        val sel = it.getBoolean(animalKeys[i])!!
+                        btn.isSelected = sel
+                        oldSelected[i] = sel
+                        newSelected[i] = sel
+                    }
+                } else {
+                    mode(binding.forest)
+                    oldSelected[0] = true
                 }
             }
             .addOnFailureListener {
-                for (btn in btnArray) {
-                    btn.isSelected = false
-                }
+                mode(binding.forest)
             }
     }
 
     private fun save() {
         val text =
-            if (!newSelected.contentEquals(oldSelected)) {
-                val dataHash = HashMap<String, Boolean>()
+            if (!newSelected.contentEquals(oldSelected) || oldMode != newMode) {
+                val dataHash = HashMap<String, Any>()
+                dataHash["mode"] = newMode
                 for ((i, sel) in newSelected.withIndex()) {
                     dataHash[animalKeys[i]] = sel
                 }
                 FirebaseFirestore.getInstance().collection("Verify")
-                    .document("configuration").update(dataHash as Map<String, Boolean>)
+                    .document("configuration").set(dataHash.toMap())
                 "Sending new configuration"
             } else {
                 "No change to configuration"
             }
         toast(requireContext(),text)
+    }
+
+    private fun mode(view: View) {
+        with(binding) {
+            val btnsArr = arrayOf(forestBtns, urbanBtns, ruralBtns)
+            for ((i,v) in arrayOf(forest, urban, rural).withIndex()) {
+                if (view == v) {
+                    newMode = modeKeys[i]
+                    btnsArr[i].expand()
+                    v.layoutParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0F, resources.displayMetrics).toInt()
+                } else {
+                    btnsArr[i].collapse()
+                    v.layoutParams.height = ActionBar.LayoutParams.WRAP_CONTENT
+                }
+            }
+        }
     }
 }

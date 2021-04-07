@@ -45,6 +45,7 @@ dependencies {
 
     // UI
     implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation "net.cachapa.expandablelayout:expandablelayout:$rootProject.expLayoutVersion"
 
     // CardView
     implementation "androidx.cardview:cardview:$rootProject.cardviewVersion"

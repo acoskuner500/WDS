@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_selected="true"
-        android:drawable="@drawable/raccoon_selected"/>
+        android:drawable="@drawable/opossum_selected"/>
     <item
-        android:drawable="@drawable/raccoon_default"/>
+        android:drawable="@drawable/opossum_default"/>
 </selector>
