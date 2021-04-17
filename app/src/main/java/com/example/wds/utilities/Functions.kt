@@ -10,8 +10,8 @@ fun prefs(context: Context): SharedPreferences {
 }
 
 fun toast(context: Context, msg: String) {
-    Toast.makeText(context,msg,Toast.LENGTH_LONG).apply {
-        setGravity(Gravity.BOTTOM,0,200)
+    Toast.makeText(context,msg,Toast.LENGTH_SHORT).apply {
+        setGravity(Gravity.BOTTOM,0,400)
         show()
     }
 }

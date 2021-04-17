@@ -38,8 +38,16 @@ class MainActivity : AppCompatActivity() {
             infoBtn.setOnClickListener {
                 openDialog(infoTitle, infoBody, true)
             }
+            infoBtn.setOnLongClickListener {
+                toast(this@MainActivity,it.contentDescription.toString())
+                true
+            }
             logoutBtn.setOnClickListener {
                 openDialog("Log out", "Are you sure you want to log out?", false)
+            }
+            logoutBtn.setOnLongClickListener {
+                toast(this@MainActivity,it.contentDescription.toString())
+                true
             }
             bottomNavigation.setOnNavigationItemSelectedListener {
                 when (it.itemId) {

@@ -1,14 +1,20 @@
 package com.example.wds
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Rect
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import com.example.wds.databinding.ActivityLoginBinding
 import com.example.wds.utilities.MyFirebaseMessagingService
 import com.example.wds.utilities.prefs
 import com.example.wds.utilities.toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
+
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -27,6 +33,22 @@ class LoginActivity : AppCompatActivity() {
             }
         }
         auth = FirebaseAuth.getInstance()
+    }
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
     }
 
     override fun onStart() {
@@ -96,16 +118,16 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun notificationSetup() {
-        val subscribed = prefs(this).getBoolean("subscribed",false)
+        val subscribed = prefs(this).getBoolean("subscribed", false)
         if (!subscribed) {
             FirebaseMessaging.getInstance().subscribeToTopic("new-deterred")
                 .addOnCompleteListener { task ->
                     val msg =
                         if (task.isSuccessful) "Subscribed to notifications"
                         else "Failed to subscribe to notifications"
-                    toast(this,msg)
+                    toast(this, msg)
                 }
-            prefs(this).edit().putBoolean("subscribed",true).apply()
+            prefs(this).edit().putBoolean("subscribed", true).apply()
             val notificationService = Intent(this, MyFirebaseMessagingService::class.java)
             startService(notificationService)
         }

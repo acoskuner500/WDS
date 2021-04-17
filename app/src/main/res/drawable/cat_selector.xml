@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_selected="true"
-        android:drawable="@drawable/rat_selected"/>
+        android:drawable="@drawable/cat_selected"/>
     <item
-        android:drawable="@drawable/rat_default"/>
+        android:drawable="@drawable/cat_default"/>
 </selector>

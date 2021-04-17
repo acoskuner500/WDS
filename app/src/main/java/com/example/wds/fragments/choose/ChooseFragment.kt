@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.example.wds.R
 import com.example.wds.databinding.FragmentChooseBinding
@@ -14,35 +15,44 @@ import com.google.firebase.firestore.FirebaseFirestore
 class ChooseFragment : Fragment(R.layout.fragment_choose) {
     private lateinit var binding: FragmentChooseBinding
     private lateinit var btnArray: Array<ImageButton>
+    private lateinit var modeArray: Array<ConstraintLayout>
 
     companion object {
         private val modeKeys = arrayOf("forest", "urban", "rural")
         private val animalKeys = arrayOf(
             "deer", "elk", "bear", "eagle", "wolf",
-            "opossum", "raccoon", "bird", "squirrel", "rat",
-            "hog", "cow", "sheep", "horse", "chicken")
+            "opossum", "raccoon", "rabbit", "squirrel", "cat",
+            "snake", "cow", "sheep", "horse", "chicken")
         private val num = animalKeys.size
         //        private const val TAG = "DEBUG"
     }
+
     private var oldMode = modeKeys[0]
     private var newMode = modeKeys[0]
-    private val oldSelected = Array(num) {false}
-    private val newSelected = Array(num) {false}
+    private val oldSelected = Array(num) { false }
+    private val newSelected = Array(num) { false }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentChooseBinding.bind(view)
         with(binding) {
-            forest.setOnClickListener { mode(it) }
-            urban.setOnClickListener { mode(it) }
-            rural.setOnClickListener { mode(it) }
-            btnArray = arrayOf(f1,f2,f3,f4,f5,u1,u2,u3,u4,u5,r1,r2,r3,r4,r5)
+            modeArray = arrayOf(forest, urban, rural)
+            for (mode in modeArray) {
+                mode.setOnClickListener {
+                    mode(it)
+                }
+            }
+            btnArray = arrayOf(f1, f2, f3, f4, f5, u1, u2, u3, u4, u5, r1, r2, r3, r4, r5)
             load()
-            for ((i,btn) in btnArray.withIndex()) {
+            for ((i, btn) in btnArray.withIndex()) {
                 btn.setOnClickListener {
                     val new = !btn.isSelected
                     btn.isSelected = new
                     newSelected[i] = new
+                }
+                btn.setOnLongClickListener {
+                    toast(requireContext(), btn.contentDescription.toString())
+                    true
                 }
             }
         }
@@ -102,20 +112,24 @@ class ChooseFragment : Fragment(R.layout.fragment_choose) {
             } else {
                 "No change to configuration"
             }
-        toast(requireContext(),text)
+        toast(requireContext(), text)
     }
 
     private fun mode(view: View) {
         with(binding) {
             val btnsArr = arrayOf(forestBtns, urbanBtns, ruralBtns)
-            for ((i,v) in arrayOf(forest, urban, rural).withIndex()) {
-                if (view == v) {
+            for ((i, mode) in modeArray.withIndex()) {
+                if (view == mode) {
                     newMode = modeKeys[i]
                     btnsArr[i].expand()
-                    v.layoutParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0F, resources.displayMetrics).toInt()
+                    mode.layoutParams.height = TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        0F,
+                        resources.displayMetrics
+                    ).toInt()
                 } else {
                     btnsArr[i].collapse()
-                    v.layoutParams.height = ActionBar.LayoutParams.WRAP_CONTENT
+                    mode.layoutParams.height = ActionBar.LayoutParams.WRAP_CONTENT
                 }
             }
         }

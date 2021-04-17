@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.wds.utilities.Entry
 import com.example.wds.R
 import com.example.wds.databinding.FragmentVerifyBinding
+import com.example.wds.utilities.toast
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.*
 import com.yuyakaido.android.cardstackview.*
@@ -128,6 +129,13 @@ class VerifyFragment : Fragment(R.layout.fragment_verify), CardStackListener {
                             .build()
                     )
                     cardStackView.swipe()
+                }
+            }
+
+            for (btn in arrayOf(undoBtn, acceptBtn, rejectBtn)) {
+                btn.setOnLongClickListener {
+                    toast(requireContext(), it.contentDescription.toString())
+                    true
                 }
             }
         }
